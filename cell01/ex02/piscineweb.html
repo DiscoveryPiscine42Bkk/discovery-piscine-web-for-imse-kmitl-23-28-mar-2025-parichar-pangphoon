@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ข้อความกลางด้านบนและรูปสองรูปขนาดใหญ่</title>
+    <style>
+        /* กำหนดให้ body ครอบคลุมพื้นที่ทั้งหมดของหน้า */
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* จัดเนื้อหาจัดในแนวตั้ง */
+            justify-content: flex-start; /* จัดตำแหน่งที่ด้านบน */
+            align-items: center; /* จัดตำแหน่งในแนวนอน */
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        /* กำหนดสไตล์ข้อความ */
+        h1 {
+            margin-top: 20px;
+            font-size: 2rem;
+            color: #333;
+        }
+        /* กำหนดให้ภาพมีขนาดใหญ่ */
+        img {
+            width: 500px; /* ขนาดภาพใหญ่ */
+            height: auto; /* รักษาสัดส่วนของภาพ */
+            margin: 20px; /* เพิ่มระยะห่างระหว่างรูป */
+        }
+        /* กล่องสำหรับวางรูป */
+        .image-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Piscine Web</h1>
+
+    <!-- กล่องสำหรับรูปภาพ -->
+    <div class="image-container">
+        <img src="https://kindconnext.com/wp-content/uploads/2021/01/Pygoscelis_papua_-Jougla_Point_Wiencke_Island_Palmer_Archipelago_-adults_and_chicks-8-1024x900.jpg/800x400" alt="รูปที่ 1">
+        <img src="https://cdn.readawrite.com/articles/12505/12504446/thumbnail/large.gif?1/800x400" alt="รูปที่ 2">
+    </div>
+</body>
+</html>
