@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Background Color Change</title>
+    
+    <!-- โหลดไลบรารี jQuery จาก CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body id="body">
+    <!-- ปุ่มที่ใช้สำหรับคลิกเพื่อเปลี่ยนสีพื้นหลัง -->
+    <button id="changeColorBtn" type="button">Click!</button>
+
+    <script>
+        // ใช้ jQuery เมื่อเอกสาร HTML โหลดเสร็จแล้ว (Document Ready)
+        $(document).ready(function() {
+            // เมื่อคลิกที่ปุ่มที่มี id = "changeColorBtn"
+            $('#changeColorBtn').click(function() {
+                // สร้างสีใหม่แบบสุ่มในรูปแบบ Hex (เช่น #A1B2C3)
+                var newColor = "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0");
+
+                // ใช้ jQuery เพื่อเปลี่ยนสีพื้นหลังของ <body> ไปยังสีใหม่
+                $('body').css('background-color', newColor);
+            });
+        });
+    </script>
+</body>
+</html>

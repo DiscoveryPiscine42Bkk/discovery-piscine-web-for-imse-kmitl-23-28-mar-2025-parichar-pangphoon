@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      #ft_list > div { margin: 10px; background: #dc33c8; padding: 10px; border-radius: 10px; cursor: pointer; }
+      #ft_list > div:hover { background: #2086e5; }
+    </style>
+  </head>
+  <body>
+    <h1>TODO LIST</h1>
+    <div id="ft_list"></div>
+    <button id="newTodoBtn">NEW</button>
+
+    <script>
+      $(function() {
+        // เมื่อกดปุ่ม NEW
+        $("#newTodoBtn").click(function() {
+          // แสดง prompt ให้ผู้ใช้กรอกข้อความ
+          const txt = prompt("Enter TODO:"); 
+          
+          // หากผู้ใช้กรอกข้อความ
+          if (txt) {
+            const name = new Date().getTime(); // ใช้เวลาเป็นคีย์ในการเก็บ cookie
+            document.cookie = `${name}=${txt}`; // สร้าง cookie ที่เก็บข้อความของ TODO
+
+            // สร้าง <div> ใหม่ที่จะใช้แสดง TODO
+            const node = $("<div>").text(txt).click(function() {
+              // เมื่อคลิกที่ TODO จะแสดง confirm box ให้ลบหรือไม่
+              if (confirm("Delete?")) {
+                node.remove(); // ลบ TODO ออกจากหน้าจอ
+                // ลบ cookie
+                document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+              }
+            });
+            // แสดง TODO ใหม่ที่ส่วนบนสุดของ #ft_list
+            $("#ft_list").prepend(node);
+          }
+        });
+
+        // ดึงข้อมูล cookies ที่มีอยู่และแสดง TODO ที่บันทึกไว้
+        document.cookie.split(";").forEach(cookie => {
+          // แยกคีย์และค่าในแต่ละ cookie
+          const [key, value] = cookie.split("=");
+          // ถ้ามีค่า cookie และค่าไม่เป็นค่าว่าง
+          if (key && value) {
+            // สร้าง <div> ที่แสดง TODO และผูกเหตุการณ์คลิกให้ลบเมื่อคลิก
+            $("<div>").text(value).click(function() {
+              // หากคลิกให้ยืนยันการลบ
+              if (confirm("Delete?")) {
+                $(this).remove(); // ลบ TODO
+                // ลบ cookie ที่เกี่ยวข้อง
+                document.cookie = key + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+              }
+            }).prependTo("#ft_list"); // เพิ่ม TODO ที่แสดงใน #ft_list
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

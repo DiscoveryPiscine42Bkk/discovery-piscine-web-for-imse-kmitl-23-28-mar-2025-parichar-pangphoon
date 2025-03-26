@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h1>Calculator!</h1>
+    <form id="calcForm">
+      <input type="number" id="num1" required />
+      <select id="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+        <option value="%">%</option>
+      </select>
+      <input type="number" id="num2" required />
+      <input type="submit" value="Try me!" />
+    </form>
+
+    <script>
+      $(document).ready(function() {
+        // ตั้งเวลาให้แสดงข้อความเตือน alleart ทุกๆ 30 วินาที
+        setInterval(() => alert("Please, use me..."), 30000);
+        
+        // เมื่อผู้ใช้ส่งฟอร์ม (กดปุ่ม "Try me!"), จะเรียกฟังก์ชันนี้
+        $('#calcForm').submit(function(e) {
+          e.preventDefault();  // หยุดการรีเฟรชหน้าเว็บที่เกิดจากการส่งฟอร์ม
+
+          // ดึงค่าจากช่องกรอกข้อมูลในฟอร์ม
+          let num1 = parseFloat($('#num1').val()),  // ตัวเลขแรก
+              num2 = parseFloat($('#num2').val()),  // ตัวเลขที่สอง
+              operator = $('#operator').val(),     // เครื่องหมายที่เลือก
+              result;  // ตัวแปรสำหรับเก็บผลลัพธ์
+
+          // ตรวจสอบความถูกต้องของข้อมูล (ตัวเลขต้องไม่เป็น NaN และต้องไม่ต่ำกว่า 0)
+          if (isNaN(num1) || isNaN(num2) || num1 < 0 || num2 < 0) {
+            return alert("Error :(");  // ถ้าผิดพลาดให้แสดงข้อความ "Error"
+          }
+
+          // เลือกการคำนวณตามเครื่องหมายที่ผู้ใช้เลือก
+          if (operator == "+") result = num1 + num2;  // บวก
+          else if (operator == "-") result = num1 - num2;  // ลบ
+          else if (operator == "*") result = num1 * num2;  // คูณ
+          else if (operator == "/") {
+            // หาร และตรวจสอบว่า divisor (num2) เป็น 0 หรือไม่
+            result = num2 === 0 ? alert("It’s over 9000!") : num1 / num2;
+          }
+          else if (operator == "%") result = num1 % num2;  // หาค่าเศษจากการหาร
+
+          // ถ้ามีผลลัพธ์ที่คำนวณได้, แสดงผลลัพธ์ใน alert
+          if (result !== undefined) alert(result);
+        });
+      });
+    </script>
+  </body>
+</html>

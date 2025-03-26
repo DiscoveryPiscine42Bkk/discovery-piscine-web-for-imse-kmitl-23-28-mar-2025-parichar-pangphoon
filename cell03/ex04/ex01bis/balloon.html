@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloon</title>
+    <style>
+        /* กำหนดลักษณะของลูกโป่ง */
+        .balloon {
+            width: 200px; /* ความกว้างเริ่มต้นของลูกโป่ง */
+            height: 200px; /* ความสูงเริ่มต้นของลูกโป่ง */
+            background-color: red; /* สีเริ่มต้นของลูกโป่ง */
+            border-radius: 50%; /* ทำให้ลูกโป่งเป็นวงกลม */
+            position: absolute; 
+            top: 50%; /* ให้อยู่ตรงกลางแนวตั้งของหน้าจอ */
+            left: 50%; /* ให้อยู่ตรงกลางแนวนอนของหน้าจอ */
+            transform: translate(-50%, -50%); /* ปรับตำแหน่งเพื่อให้ลูกโป่งอยู่ตรงกลางหน้าจอ */
+            transition: all 0.3s ease; /* เพิ่มการเคลื่อนไหวอย่างราบรื่นในการปรับขนาดและสี */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+</head>
+<body>
+    <div class="balloon" id="balloon"></div>
+
+    <script>
+        $(function() {
+            // กำหนดตัวแปรที่ใช้
+            const $balloon = $('#balloon');  // ใช้ jQuery เลือก div ที่มี id เป็น balloon
+            const colors = ['red', 'green', 'blue'];  // รายการสีที่จะใช้สำหรับเปลี่ยนสีของลูกโป่ง
+            let size = 200, colorIndex = 0;  // กำหนดขนาดเริ่มต้นเป็น 200px และสีเริ่มต้นเป็น red
+
+            // ถ้าเกิดเหตุการณ์ click และ mouseleave (เมื่อคลิกที่ลูกโป่งหรือเลื่อนเมาส์ออกจากลูกโป่ง)
+            $balloon.on('click mouseleave', function(e) {
+                // ถ้าเหตุการณ์เป็น click (คลิกที่ลูกโป่ง)
+                size = (e.type === 'click') 
+                    ? (size + 10 > 420 ? 200 : size + 10)  // เพิ่มขนาด 10px ทุกครั้งที่คลิก แต่ไม่เกิน 420px
+                    : Math.max(200, size - 5);  // ถ้าเหตุการณ์เป็น mouseleave (เมาส์ออกจากลูกโป่ง) ลดขนาดลง 5px แต่ไม่ให้ต่ำกว่า 200px
+
+                // เปลี่ยนสีของลูกโป่ง
+                colorIndex = (e.type === 'click') 
+                    ? (colorIndex + 1) % colors.length  // ถ้าเป็น click เปลี่ยนสีไปตามลำดับ (red -> green -> blue -> red)
+                    : (colorIndex - 1 + colors.length) % colors.length;  // ถ้าเป็น mouseleave เปลี่ยนสีย้อนกลับ
+
+                // ปรับขนาดและสีของลูกโป่ง
+                $balloon.css({
+                    width: size,  // กำหนดความกว้าง
+                    height: size,  // กำหนดความสูง
+                    backgroundColor: colors[colorIndex]  // กำหนดสีพื้นหลัง
+                });
+            });
+        });
+    </script>
+</body>
+</html>
